@@ -20,7 +20,7 @@ public class FirstApp {
         rightMotor.forward();
 
         try {
-            Thread.sleep(5000); // Pause de 2 secondes
+            Thread.sleep(5000); // Pause de 5 secondes
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
