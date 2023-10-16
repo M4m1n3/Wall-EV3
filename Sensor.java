@@ -23,6 +23,13 @@ public class Sensor {
 		float[] sample = new float[spdist.sampleSize()];
 		spdist.fetchSample(sample, 0);
 		return sample[0];}
+
+	/* Valeurs limite du capteur ultrasons :
+ 	distance maximale detection : environ 2.50m
+  	distance maximale detection palet : environ 1.20m
+   	zone d'incertitude entre 0.20m et 0.33m pour le palet, affiché à 0.326 dans la zone
+    	palet non détecté à moins de 0.20m
+	*/
 	
 	
 	public float estTouche() {
