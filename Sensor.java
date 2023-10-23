@@ -32,11 +32,11 @@ public class Sensor {
 	*/
 	
 	
-	public float estTouche() {
+	public boolean estTouche() {
 		SampleProvider result = toucher.getTouchMode();
 		float[] sample  = new float[1];
 		result.fetchSample(sample, 0);
-		return sample[0];
+		return sample[0]==1.0;
 		}
 	
 	public float couleur() {
