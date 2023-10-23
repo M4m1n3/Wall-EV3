@@ -10,8 +10,8 @@ public class TestSensor {
 	public static void main(String[] args) {
 		Sensor robot = new Sensor();
 		Delay d = new Delay();
-		float s1,s2;
-		float[] s3;
+		float s1,s3;
+		char s2;
 		for (int i = 0; i<30; i++) {
 			//s1 = robot.dist();
 			//s2 = robot.estTouche();
@@ -20,11 +20,7 @@ public class TestSensor {
 			//System.out.print(" ");
 			//System.out.print(s2);
 			//System.out.print(" ");
-			System.out.print(s3[0]);
-			System.out.print(' ');
-			System.out.print(s3[1]);
-			System.out.print(' ');
-			System.out.print(s3[2]);
+			System.out.print(s3);
 			System.out.println();
 			d.msDelay(1000);
 		}
