@@ -8,6 +8,8 @@ public class Actionneurs {
 	EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.B);
 	EV3LargeRegulatedMotor bras = new EV3LargeRegulatedMotor(MotorPort.D);
 	private double angle;
+	private char etat;
+	
 	public void rouler() {
 		rightMotor.startSynchronization();
 		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
@@ -73,6 +75,21 @@ public class Actionneurs {
     public void bougerBras(int angle) {
     	bras.rotate(angle);
     }
+
+ 	public void ouvreBras(){
+		if(etat=='f'){
+			bougerBras(1100);
+			etat='o';
+		}
+	}
+
+	public void fermeBras(){
+		if(etat=='o'){
+			bougerBras(-1100);
+			etat='f';
+		}
+	}
+	
     public void accelerer(int vitesse) {
     	rightMotor.setAcceleration(vitesse);
     	leftMotor.setAcceleration(vitesse);
