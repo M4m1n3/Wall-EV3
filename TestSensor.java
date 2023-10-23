@@ -5,7 +5,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.*;
 import lejos.utility.Delay;
-public class Test {
+public class TestSensor {
 
 	public static void main(String[] args) {
 		Sensor robot = new Sensor();
