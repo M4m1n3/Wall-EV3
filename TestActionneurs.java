@@ -2,10 +2,51 @@ import lejos.hardware.Brick;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
+import lejos.utility.Delay;
 
 public class TestActionneurs {
 	public static void main(String[] args) {
-		// Créez une instance de la classe Actionneurs
+
+		Actionneurs actionneurs = new Actionneurs();
+		Sensors capteurs = new Sensors();
+		Delay d = new Delay();
+		//attrape premier palet
+		while(capteurs.dist()>0.33) {
+			actionneurs.rouler();
+		}
+		actionneurs.arreter();
+		//actionneurs.bougerBras(1100);	
+		while(capteurs.estTouche()==0.0) {
+			actionneurs.rouler();
+		}
+		actionneurs.arreter();
+		actionneurs.bougerBras(-1000);
+		//aller au but
+		while(capteurs.couleur()!=6.0) {
+			//float s3 = capteurs.couleur();
+			//System.out.println(s3);
+				actionneurs.rouler();
+				d.msDelay(100);
+			}
+		actionneurs.bougerBras(1000);
+		actionneurs.arreter();
+		//d.msDelay(5000);
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	/*// Créez une instance de la classe Actionneurs
 		Actionneurs actionneurs = new Actionneurs();
 
 		// Testez les méthodes de la classe Actionneurs
@@ -21,14 +62,6 @@ public class TestActionneurs {
 
 		System.out.println("Arrêter...");
 		actionneurs.arreter();
-
-		// Attendez à nouveau
-
-
-		//    System.out.println("Reculer...");
-		//      actionneurs.reculer();
-
-		// Attendez à nouveau
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -71,5 +104,4 @@ public class TestActionneurs {
 
 		// Arrêtez tous les moteurs à la fin
 		actionneurs.arreter();
-	}
-}
+	} */
