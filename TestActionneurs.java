@@ -8,7 +8,7 @@ public class TestActionneurs {
 	public static void main(String[] args) {
 
 		Actionneurs actionneurs = new Actionneurs();
-		Sensors capteurs = new Sensors();
+		Sensor capteurs = new Sensor();
 		Delay d = new Delay();
 		//attrape premier palet
 		while(capteurs.dist()>0.33) {
@@ -16,7 +16,7 @@ public class TestActionneurs {
 		}
 		actionneurs.arreter();
 		//actionneurs.bougerBras(1100);	
-		while(capteurs.estTouche()==0.0) {
+		while(capteurs.estTouche()==false) {
 			actionneurs.rouler();
 		}
 		actionneurs.arreter();
