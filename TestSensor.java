@@ -1,4 +1,5 @@
-package ia;
+package test;
+
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;

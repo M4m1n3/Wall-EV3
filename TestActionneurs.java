@@ -1,3 +1,5 @@
+package test;
+import Actionneurs;
 import lejos.hardware.Brick;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -7,10 +9,7 @@ import lejos.utility.Delay;
 public class TestActionneurs {
 	public static void main(String[] args) {
 
-		Actionneurs actionneurs = new Actionneurs();
-		Sensor capteurs = new Sensor();
-		Delay d = new Delay();
-		//attrape premier palet
+public void testAttrapePalet() {
 		while(capteurs.dist()>0.33) {
 			actionneurs.rouler();
 		}
@@ -32,6 +31,9 @@ public class TestActionneurs {
 		actionneurs.arreter();
 		//d.msDelay(5000);
 		}
+Actionneurs actionneurs = new Actionneurs();
+Sensor capteurs = new Sensor();
+Delay d = new Delay();
 
 	}
 
