@@ -10,6 +10,8 @@ public class TestActionneurs {
 	public static void main(String[] args) {
 
 public void testAttrapePalet() {
+	Actionneurs actionneurs = new Actionneurs();
+	Sensor capteurs = new Sensor();
 		while(capteurs.dist()>0.33) {
 			actionneurs.rouler();
 		}
@@ -31,8 +33,7 @@ public void testAttrapePalet() {
 		actionneurs.arreter();
 		//d.msDelay(5000);
 		}
-Actionneurs actionneurs = new Actionneurs();
-Sensor capteurs = new Sensor();
+
 Delay d = new Delay();
 
 	}
