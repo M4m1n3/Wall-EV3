@@ -21,6 +21,8 @@ public class Actionneurs {
 	Wheel roueDroite = WheeledChassis.modelWheel(rightMotor, 43.2).offset(7.5);
 	Chassis chassis = new WheeledChassis(new Wheel[] { roue1, roue2 }, WheeledChassis.TYPE_DIFFERENTIAL);
 	MovePilot pilot = new MovePilot(chassis);
+	//l'attribut rotation va permettre de cumuler toutes les rotations pour connaitre l'angle du robot
+	public int rotation = 0;
 
 	/*
 	 * Fonction qui permet de récupérer le pilote du robot
@@ -66,8 +68,9 @@ public class Actionneurs {
 	 * atteint, false sinon
 	 */
 	public void rotate(int angle, boolean retourImmediat) {
-		// 360 degres = 2260
-		pilot.rotate(angle * 2260 / 360, retourImmediat);
+		// 360 degres = 2110
+		pilot.rotate(angle * 2110 / 360, retourImmediat);
+		rotation=(rotation+angle)%360;
 	}
 
 	/*
