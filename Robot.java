@@ -13,7 +13,7 @@ public class Robot {
 	Actionneurs act = new Actionneurs();
 	Delay d = new Delay();
 	
-	public void alignePaletProche() {
+	/*public void alignePaletProche() {
 		float min=999;
 		float dN=sens.dist();
 		float dNmoins1;
@@ -32,7 +32,7 @@ public class Robot {
 			d.msDelay(5);
 		}
 			act.rotate(360-rotaDepuisMin,false);
-	}
+	}*/
 	
 	public void alignePaletProcheU() {
 		act.chassis.setAngularSpeed(250);
