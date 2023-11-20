@@ -35,7 +35,7 @@ public class Robot {
 	}*/
 	
 	public void alignePaletProcheU() {
-		act.chassis.setAngularSpeed(250);
+		act.chassis.setAngularSpeed(300);
 		float min = 999;
 		float dN = sens.dist();
 		float dNmoins1;
@@ -45,19 +45,19 @@ public class Robot {
 		while(act.chassis.isMoving()) {
 			dNmoins1=dN;
 			dN=sens.dist();
-			if (Math.abs(dNmoins1-dN)>0.04)
+			if (dNmoins1-dN>0.1)
 				if(dN < min) {
 					min=dN;
+					//System.out.println(min);
 					indexMin=mesures.size();
 				}
 			mesures.add(dN);
 		}
-		System.out.println(min);
-		d.msDelay(1000);
 		act.chassis.setAngularSpeed(1000);
-		int rota = ((indexMin/(mesures.size()-1))*360);
+		int rota = (int) (((float) indexMin/(mesures.size()-1))*360);
+		//System.out.println(rota);
 		act.rotate(rota, false);
-		//act.rotate(360, false);
+		d.msDelay(10000);
 	}
 	
 	
