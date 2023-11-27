@@ -82,6 +82,12 @@ public class Robot {
         return indexOf(Collections.min(mesures))/(mesures.size()*360);
     }
 
+	    public void alignePaletProche3(){
+        ArrayList<Float> mesures = getMesures();
+        int rota = getMin(mesures);
+        act.rotate(rota,false);
+    }
+
 
 	public boolean detectionMur() {
 		return (sens.dist()<20);
@@ -93,7 +99,7 @@ public class Robot {
 
 	public static void main(String[] args) {
 		Robot bot = new Robot();
-		bot.alignePaletProcheU();
+		bot.alignePaletProche3();
 		//bot.act.rotate(360, false);
 
 	}
