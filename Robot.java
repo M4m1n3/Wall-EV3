@@ -76,17 +76,15 @@ public class Robot {
 	public Float getMin(ArrayList<Float> mesures) {
 		return Collections.min(mesures);
 	}
-	public boolean diffMesures(ArrayList<Float> mesures) {
-		boolean mur = false;
-		for (int i = 0; i < mesures.size() - 1; i++) {
-			if (Math.abs(mesures.get(i) - mesures.get(i + 1)) > 0.1) {
-				mur = true;
-				break;
-			}
-		}
-		return mur;
-	}
-	//booleen sert a rien, se servir de l'arraylist pr retourner les intervalles d'angle ou y'a des murs pr les éviter
+    public ArrayList<Float> diffMesures(ArrayList<Float> mesures) {
+        ArrayList<Float> intervallesMurs = new ArrayList<>();
+        for (int i = 0; i < mesures.size() - 1; i++) {
+            if (Math.abs(mesures.get(i) - mesures.get(i + 1)) > 0.1) {
+                intervallesMurs.add(mesures.get(i));
+            }
+        }
+        return intervallesMurs;
+    }
 
 
 	public boolean detectionMur() {
