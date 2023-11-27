@@ -8,9 +8,8 @@ public class TestActionneurs {
 	public static void main(String[] args) {
 	Actionneurs actionneurs = new Actionneurs();
 	Sensor capteurs = new Sensor();
-	
 	Delay d = new Delay();
-	
+//refaire sans rouler mais avec travel
 		while(capteurs.dist()>0.33) {
 			actionneurs.rouler2();
 		}
@@ -22,19 +21,27 @@ public class TestActionneurs {
 		}
 		actionneurs.stop();
 		actionneurs.bougerBras(-500);
+		Delay.msDelay(100);
 		
 		//aller au but
-		while(capteurs.couleur()!=6.0) {
-			//float s3 = capteurs.couleur();
-			//System.out.println(s3);
-				actionneurs.rouler2();
-				Delay.msDelay(100);
-			}
+		while(capteurs.dist()>0.25) {
+			actionneurs.rouler3();
+		}
 		actionneurs.stop();
-		actionneurs.bougerBras(500);
-		actionneurs.reculer();
-		Delay.msDelay(700);
+		actionneurs.bougerBras(600);
 		actionneurs.stop();
+		
+    	actionneurs.pilot.travel(-500,false);
+		
+		actionneurs.stop();
+		actionneurs.bougerBras(-600);
+		actionneurs.stop();
+		
+
+	//	actionneurs.bougerBras(500);
+		//actionneurs.reculer();
+		//Delay.msDelay(700);
+		//actionneurs.stop();
 		
 		//d.msDelay(5000);
 		
