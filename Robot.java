@@ -74,16 +74,16 @@ public class Robot {
 	}
 	
 	public Float getMin(ArrayList<Float> mesures) {
-		return Collections.min(mesures);
+		return Collections.min(intervallesMurs(mesures));
 	}
     public ArrayList<Float> diffMesures(ArrayList<Float> mesures) {
-        ArrayList<Float> intervallesMurs = new ArrayList<>();
+        ArrayList<Float> mesuresObstacles = new ArrayList<>();
         for (int i = 0; i < mesures.size() - 1; i++) {
             if (Math.abs(mesures.get(i) - mesures.get(i + 1)) > 0.1) {
-                intervallesMurs.add(mesures.get(i));
+                mesuresObstacles.add(mesures.get(i));
             }
         }
-        return intervallesMurs;
+        return mesuresObstacles;
     }
 
 
