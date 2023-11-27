@@ -74,7 +74,7 @@ public class Robot {
 	}
 	
 	public Float getMin(ArrayList<Float> mesures) {
-		return Collections.min(intervallesMurs(mesures));
+		return Collections.min(mesuresObstacles(mesures));
 	}
     public ArrayList<Float> diffMesures(ArrayList<Float> mesures) {
         ArrayList<Float> mesuresObstacles = new ArrayList<>();
