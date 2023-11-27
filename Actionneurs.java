@@ -1,3 +1,5 @@
+package ia;
+
 import lejos.hardware.Brick;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -19,11 +21,13 @@ public class Actionneurs {
 	EV3LargeRegulatedMotor bras = new EV3LargeRegulatedMotor(MotorPort.D);
 	Wheel roueGauche = WheeledChassis.modelWheel(leftMotor, 43.2).offset(-7.5);
 	Wheel roueDroite = WheeledChassis.modelWheel(rightMotor, 43.2).offset(7.5);
-	Chassis chassis = new WheeledChassis(new Wheel[] { roue1, roue2 }, WheeledChassis.TYPE_DIFFERENTIAL);
+	Chassis chassis = new WheeledChassis(new Wheel[] { roueGauche, roueDroite }, WheeledChassis.TYPE_DIFFERENTIAL);
 	MovePilot pilot = new MovePilot(chassis);
 	//l'attribut rotation va permettre de cumuler toutes les rotations pour connaitre l'angle du robot
 	public int rotation = 0;
 	public int rotationBras = 0;
+	static int brasOuverts=1100;
+	static int brasFermes=-1100;
 
 	/*
 	 * Fonction qui permet de récupérer le pilote du robot
@@ -41,37 +45,7 @@ public class Actionneurs {
 		// 1cm = 8
 		pilot.travel(distance * 8, immediateReturn);
 	}
-public void rouler1() {
-		rightMotor.setSpeed(200);
-		leftMotor.setSpeed(200);
-		rightMotor.startSynchronization();
-		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
-		rightMotor.forward();
-		leftMotor.forward();
-		rightMotor.endSynchronization();
-	}
-	
-	public void rouler2() {
-		rightMotor.setSpeed(400);
-		leftMotor.setSpeed(400);
-		rightMotor.startSynchronization();
-		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
-		rightMotor.forward();
-		leftMotor.forward();
-		rightMotor.endSynchronization();
-	}
-	
-	public void rouler3() {
-		
-		rightMotor.startSynchronization();
-		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
-		rightMotor.setSpeed(800);
-		leftMotor.setSpeed(800);
-		rightMotor.forward();
-		leftMotor.forward();
-		rightMotor.endSynchronization();
-	}
-	
+
 	/*
 	 * Fonction qui permet d'arreter l'avancée du robot
 	 * 
@@ -111,7 +85,7 @@ public void rouler1() {
 	 */
 	public void bougerBras(int angle) {
 		bras.rotate(angle);
-		rotationBras+angle;
+		rotationBras+=angle;
 	}
 	public void fermerBras(){
 		bras.rotate(brasFermes-rotationBras);
