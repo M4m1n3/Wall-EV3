@@ -23,6 +23,7 @@ public class Actionneurs {
 	MovePilot pilot = new MovePilot(chassis);
 	//l'attribut rotation va permettre de cumuler toutes les rotations pour connaitre l'angle du robot
 	public int rotation = 0;
+	public int rotationBras = 0;
 
 	/*
 	 * Fonction qui permet de récupérer le pilote du robot
@@ -80,8 +81,16 @@ public class Actionneurs {
 	 */
 	public void bougerBras(int angle) {
 		bras.rotate(angle);
+		rotationBras+angle;
 	}
-
+	public void fermerBras(){
+		bras.rotate(brasFermes-rotationBras);
+		rotationBras=0;
+	}
+	public void ouvrirBras(){
+		bras.rotate(brasOuverts-rotationBras);
+		rotationBras=0;
+	}
 	/*
 	 * à modifier via mesures
 	 * Fonction qui permet de faire tourner les roues à une vitesse donnée
