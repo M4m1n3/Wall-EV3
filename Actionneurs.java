@@ -41,7 +41,37 @@ public class Actionneurs {
 		// 1cm = 8
 		pilot.travel(distance * 8, immediateReturn);
 	}
-
+public void rouler1() {
+		rightMotor.setSpeed(200);
+		leftMotor.setSpeed(200);
+		rightMotor.startSynchronization();
+		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
+		rightMotor.forward();
+		leftMotor.forward();
+		rightMotor.endSynchronization();
+	}
+	
+	public void rouler2() {
+		rightMotor.setSpeed(400);
+		leftMotor.setSpeed(400);
+		rightMotor.startSynchronization();
+		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
+		rightMotor.forward();
+		leftMotor.forward();
+		rightMotor.endSynchronization();
+	}
+	
+	public void rouler3() {
+		
+		rightMotor.startSynchronization();
+		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
+		rightMotor.setSpeed(800);
+		leftMotor.setSpeed(800);
+		rightMotor.forward();
+		leftMotor.forward();
+		rightMotor.endSynchronization();
+	}
+	
 	/*
 	 * Fonction qui permet d'arreter l'avancée du robot
 	 * 
