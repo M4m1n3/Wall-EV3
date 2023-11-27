@@ -9,6 +9,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.chassis.Chassis;
 import lejos.utility.Delay;
+import lejos.hardware.Button;
 
 public class Robot {  
 	Sensor sens = new Sensor();
@@ -96,6 +97,12 @@ public class Robot {
 
 	public void eviteObstacle() {
 		if(detectionMur())act.rotate(90, false);
+	}
+	
+	public boolean interrupteur() {
+		if(Button.ENTER.isDown())
+			return !interrupteur();
+		else return interrupteur();
 	}
 
 	public static void main(String[] args) {
