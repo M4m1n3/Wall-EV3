@@ -36,7 +36,7 @@ public class Robot {
 			act.rotate(360-rotaDepuisMin,false);
 	}*/
 
-	public void alignePaletProcheU() {
+	public void alignePaletProche() {
 		act.chassis.setAngularSpeed(300);
 		float min = 999;
 		float dN = sens.dist();
@@ -72,18 +72,14 @@ public class Robot {
 		}
 		return mesures;
 	}
-	
-	public Float getMin(ArrayList<Float> mesures) {
-		return Collections.min(mesuresObstacles(mesures));
-	}
-    public ArrayList<Float> diffMesures(ArrayList<Float> mesures) {
-        ArrayList<Float> mesuresObstacles = new ArrayList<>();
+	//fct qui si diff<10cm remplacer mesure par 999  
+    public int getMin(ArrayList<Float> mesures) {
         for (int i = 0; i < mesures.size() - 1; i++) {
-            if (Math.abs(mesures.get(i) - mesures.get(i + 1)) > 0.1) {
-                mesuresObstacles.add(mesures.get(i));
+            if (Math.abs(mesures.get(i) - mesures.get(i + 1)) < 0.1) {
+                mesures.set(i,999);
             }
         }
-        return mesuresObstacles;
+        return indexOf(Collections.min(mesures))/(mesures.size()*360);
     }
 
 
