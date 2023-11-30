@@ -62,11 +62,11 @@ public class Robot {
 		act.rotate(rota, false);
 		d.msDelay(10000);
 	}
-	public ArrayList<Float> getMesures() {
+	public ArrayList<Float> getMesures(int angle) {
 		act.chassis.setAngularSpeed(300);
 		ArrayList<Float> mesures = new ArrayList<Float>();
 		float dN = sens.dist();
-		act.rotate(360,true);
+		act.rotate(angle,true);
 		while(act.chassis.isMoving()) {
 			mesures.add(dN);
 			dN = sens.dist();
@@ -74,18 +74,18 @@ public class Robot {
 		return mesures;
 	}
 	//fct qui si diff<10cm remplacer mesure par 999  
-    public int getMin(ArrayList<Float> mesures) {
+    public int getMin(ArrayList<Float> mesures, int angle) {
         for (int i = 0; i < mesures.size() - 1; i++) {
             if (Math.abs(mesures.get(i) - mesures.get(i + 1)) < 0.1) {
                 mesures.set(i,mesures.get(i)+999);
             }
         }
-        return (int)(((float)(mesures.indexOf(Collections.min(mesures)))/mesures.size())*360);
+        return (int)(((float)(mesures.indexOf(Collections.min(mesures)))/mesures.size())*angle);
     }
 
-	    public void alignePaletProche3(){
-        ArrayList<Float> mesures = getMesures();
-        int rota = getMin(mesures);
+	    public void alignePaletProche3(int angle){
+        ArrayList<Float> mesures = getMesures(angle);
+        int rota = getMin(mesures,angle);
         act.chassis.setAngularSpeed(1000);
         act.rotate(rota,false);
     }
@@ -98,16 +98,10 @@ public class Robot {
 	public void eviteObstacle() {
 		if(detectionMur())act.rotate(90, false);
 	}
-	
-	public boolean interrupteur() {
-		if(Button.ENTER.isDown())
-			return !interrupteur();
-		else return interrupteur();
-	}
 
 	public static void main(String[] args) {
 		Robot bot = new Robot();
-		bot.alignePaletProche3();
+		bot.alignePaletProche3(360);
 		//bot.act.rotate(360, false);
 
 	}
