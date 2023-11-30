@@ -1,6 +1,13 @@
 package ia;
+
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.robotics.Color;
 import lejos.robotics.SampleProvider;
+import lejos.robotics.filter.MeanFilter;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
@@ -8,21 +15,35 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 
 public class Sensor {
-	EV3UltrasonicSensor son;
-	EV3ColorSensor couleur;
-	EV3TouchSensor toucher;
+
+	    private static EV3ColorSensor couleur;
+	    private EV3TouchSensor toucher;
+	    private static EV3UltrasonicSensor son;
+		private static SampleProvider spdist;
+		private static float[] sample;
 	
-	public Sensor() {
-		this.son = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
-		this.couleur = new EV3ColorSensor(LocalEV3.get().getPort("S4"));
-		this.toucher = new EV3TouchSensor(LocalEV3.get().getPort("S3"));
-	}
+	 public Sensor(Port port, Port port3, Port port4){    	
+			
+			// UltraSonic sensor
+			son = new EV3UltrasonicSensor(port);
+			spdist = son.getDistanceMode();
+			son.enable();
+			sample = new float[spdist.sampleSize()];
+			spdist.fetchSample(sample, 0);
+			// touch Sensor
+			toucher = new EV3TouchSensor(port3);
+			//colorsensor
+			couleur = new EV3ColorSensor(port4);
+			couleur.setFloodlight(Color.WHITE);
+		
+	    }
 	
 	public float dist() {
-		SampleProvider spdist = son.getMode("Distance");
-		float[] sample = new float[spdist.sampleSize()];
 		spdist.fetchSample(sample, 0);
-		return sample[0];}
+		son.close();
+		return sample[0];
+		
+		}
 
 	/* Valeurs limite du capteur ultrasons :
  	distance maximale detection : environ 2.50m
@@ -45,6 +66,10 @@ public class Sensor {
 		result.fetchSample(sample, 0);
 		return sample[0];
 		}
-
+	public void close() {
+		son.close();
+		couleur.close();
+		toucher.close();
+	}
 	
 }
