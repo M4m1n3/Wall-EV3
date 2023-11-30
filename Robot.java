@@ -98,6 +98,35 @@ public class Robot {
 	public void eviteObstacle() {
 		if(detectionMur())act.rotate(90, false);
 	}
+	public void attrapePremierPalet(){
+		while(sens.dist()>0.33) {
+			act.rouler2();
+		}
+		act.stop();
+		act.bougerBras(600);
+		while(!sens.estTouche()) {
+			act.rouler2();
+		}
+		act.stop();
+		act.bougerBras(-600);
+		act.rotate(90,false);
+		act.move(20, false);
+		act.rotate(-90, false);
+
+		//aller au but
+		while(sens.dist()>0.25) {
+			act.rouler3();
+		}
+		act.stop();
+		act.bougerBras(600);
+		act.stop();
+		act.pilot.travel(-500,false);
+		act.stop();
+		act.bougerBras(-600);
+		act.stop();
+		act.rotate(90,false);
+		act.stop();
+	}
 
 	public static void main(String[] args) {
 		Robot bot = new Robot();
