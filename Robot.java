@@ -60,14 +60,16 @@ public class Robot {
 				mesures.set(i,mesures.get(i)+999);
 			}
 		}
+		if (Collections.min(mesures)>1.25) return 0 ;
 		return (int)(((float)(mesures.indexOf(Collections.min(mesures)))/mesures.size())*angle);
 	}
 
-	public void alignePaletProche3(int angle){
+	public int alignePaletProche3(int angle){
 		ArrayList<Float> mesures = getMesures(angle);
 		int rota = getMin(mesures,angle);
 		act.chassis.setAngularSpeed(1000);
-		act.rotate(rota,false);
+		act.rotate((-(angle-rota)),false);
+		return rota;
 	}
 
 	public boolean detectionMur() {
@@ -81,11 +83,10 @@ public class Robot {
 		return Button.ENTER.isDown();
 	}
 
-public static void main(String[] args) {
+	public static void main(String[] args) {
 		Robot robot = new Robot();
 		Delay d = new Delay();
 		boolean paletDetecte = false;
-	while(!robot.boutonPresse()){
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -99,8 +100,11 @@ public static void main(String[] args) {
 
 		robot.act.stop();
 		robot.act.bougerBras(-600);
-		robot.act.rotate(90, false);
+		robot.act.stop();
+		robot.act.rotate(100, false);
+		robot.act.stop();
 		robot.act.move(20, false);
+		robot.act.stop();
 		robot.act.rotate(-90, false);
 
 		//aller au but
@@ -111,25 +115,31 @@ public static void main(String[] args) {
 		robot.act.stop();
 		robot.act.bougerBras(600);
 		robot.act.stop();
-		robot.act.pilot.travel(-600, false);
+		robot.act.pilot.travel(-300, false);
 		robot.act.stop();
-		robot.act.bougerBras(-600);
+		robot.act.bougerBras(-500);
 		robot.act.stop();
 		robot.act.rotate(90, false);
 		robot.act.stop();
 
+		while(!robot.boutonPresse()){
+
 				
 	while (!paletDetecte) {
-		robot.alignePaletProche3(180);
-		if (robot.sens.dist() > 0.33) {
-			robot.act.rouler2();
+		int min = robot.alignePaletProche3(180);
+		if (min!=0) {
+			while (robot.sens.dist() > 0.33) {
+				robot.act.rouler2();
+			}
+
 			robot.act.stop();
-			robot.act.bougerBras(600);
+			robot.act.bougerBras(500);
+
 			while (!robot.sens.estTouche()) {
 				robot.act.rouler2();
 			}
 			robot.act.stop();
-			robot.act.bougerBras(-600);
+			robot.act.bougerBras(-500);
 			Delay.msDelay(100);
 			paletDetecte=true ;	
 		}
@@ -137,7 +147,6 @@ public static void main(String[] args) {
 	else {
 			robot.act.rotate(-90, false);
 			robot.act.move(60, false);
-			robot.alignePaletProche3(180);
 		}
 		
 	}
@@ -148,6 +157,16 @@ public static void main(String[] args) {
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
+		robot.act.stop();
+		robot.act.bougerBras(600);
+		robot.act.stop();
+		robot.act.pilot.travel(-600, false);
+		robot.act.stop();
+		robot.act.bougerBras(-600);
+		robot.act.stop();
+		robot.act.rotate(90, false);
+		robot.act.stop();
+
 	}
 		robot.act.stop();
 
