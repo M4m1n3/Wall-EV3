@@ -78,9 +78,10 @@ public class Robot {
 		if(detectionMur())act.rotate(90, false);
 	}
 
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		Robot robot = new Robot();
 		Delay d = new Delay();
+		boolean paletDetecte = false;
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -98,37 +99,45 @@ public class Robot {
 		robot.act.move(20, false);
 		robot.act.rotate(-90, false);
 
-		// aller au but
+		//aller au but
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
-
+    
 		robot.act.stop();
 		robot.act.bougerBras(600);
 		robot.act.stop();
-		robot.act.pilot.travel(-500, false);
+		robot.act.pilot.travel(-600, false);
 		robot.act.stop();
 		robot.act.bougerBras(-600);
 		robot.act.stop();
 		robot.act.rotate(90, false);
 		robot.act.stop();
 
-
+				
+	while (!paletDetecte) {
 		robot.alignePaletProche3(180);
-		while (robot.sens.dist() > 0.33) {
+		if (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
+			robot.act.stop();
+			robot.act.bougerBras(600);
+			while (!robot.sens.estTouche()) {
+				robot.act.rouler2();
+			}
+			robot.act.stop();
+			robot.act.bougerBras(-600);
+			Delay.msDelay(100);
+			paletDetecte=true ;	
 		}
-
-		robot.act.stop();
-		robot.act.bougerBras(600);
-
-		while (!robot.sens.estTouche()) {
-			robot.act.rouler2();
+		
+	else {
+			robot.act.rotate(-90, false);
+			robot.act.move(60, false);
+			robot.alignePaletProche3(180);
 		}
-
-		robot.act.stop();
-		robot.act.bougerBras(-500);
-		Delay.msDelay(100);
+		
+	}
+	
 		robot.act.rotate((360 - robot.act.rotation) % 360, false);
 		robot.act.stop();
 
