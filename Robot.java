@@ -77,11 +77,15 @@ public class Robot {
 	public void eviteObstacle() {
 		if(detectionMur())act.rotate(90, false);
 	}
+	public boolean boutonPresse() {
+		return Button.ENTER.isDown();
+	}
 
 public static void main(String[] args) {
 		Robot robot = new Robot();
 		Delay d = new Delay();
 		boolean paletDetecte = false;
+	while(!robot.boutonPresse()){
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -144,7 +148,7 @@ public static void main(String[] args) {
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
-
+	}
 		robot.act.stop();
 
 	}
