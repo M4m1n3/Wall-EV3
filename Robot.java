@@ -89,7 +89,6 @@ public class Robot {
 		Delay d = new Delay();
 		boolean paletDetecte = false;
 		boolean obstacle=false;
-
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -125,7 +124,9 @@ public class Robot {
 		robot.act.rotate(90, false);
 		robot.act.stop();
 
-while(!robot.boutonPresse()){
+		while(!robot.boutonPresse()){
+
+				
 	while (!paletDetecte) {
 		int min = robot.alignePaletProche3(180);
 		if (min!=0) {
@@ -138,7 +139,10 @@ while(!robot.boutonPresse()){
 
 			while (!robot.sens.estTouche()&&!obstacle) {
 				robot.act.rouler2();
-				if (robot.detectionMur()) obstacle=true;
+				if (robot.detectionMur()) {
+					obstacle=true;
+					robot.act.bougerBras(-500);
+				}
 				robot.eviteObstacle();
 			}
 			robot.act.stop();
