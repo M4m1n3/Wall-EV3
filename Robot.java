@@ -89,6 +89,19 @@ public class Robot {
 		Delay d = new Delay();
 		boolean paletDetecte = false;
 		boolean obstacle=false;
+		Thread buttonCheckThread = new Thread(new Runnable() {
+			public void run() {
+
+				while (true) {
+					if (Button.ENTER.isDown()) {
+						System.exit(0);
+					}
+				}
+			}
+		});
+
+		buttonCheckThread.start();
+	while(!robot.boutonPresse()){
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -123,8 +136,6 @@ public class Robot {
 		robot.act.stop();
 		robot.act.rotate(90, false);
 		robot.act.stop();
-
-		while(!robot.boutonPresse()){
 
 				
 	while (!paletDetecte) {
