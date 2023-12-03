@@ -1,3 +1,4 @@
+package ia;
 import java.util.ArrayList;
 import java.util.Collections;
 import lejos.hardware.Brick;
@@ -73,7 +74,7 @@ public class Robot {
 	}
 
 	public boolean detectionMur() {
-		return (sens.dist()<20);
+		return (sens.dist()<15);
 	}
 
 	public void eviteObstacle() {
@@ -87,6 +88,7 @@ public class Robot {
 		Robot robot = new Robot();
 		Delay d = new Delay();
 		boolean paletDetecte = false;
+		boolean obstacle=false;
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -135,18 +137,24 @@ public class Robot {
 			robot.act.stop();
 			robot.act.bougerBras(500);
 
-			while (!robot.sens.estTouche()) {
+			while (!robot.sens.estTouche()&&!obstacle) {
 				robot.act.rouler2();
+				if (robot.detectionMur()) obstacle=true;
+				robot.eviteObstacle();
 			}
 			robot.act.stop();
-			robot.act.bougerBras(-500);
-			Delay.msDelay(100);
-			paletDetecte=true ;	
+			if(!obstacle) {
+				robot.act.bougerBras(-500);
+				Delay.msDelay(100);
+				paletDetecte=true ;
+				}
+			obstacle=false;
 		}
 		
 	else {
 			robot.act.rotate(-90, false);
-			robot.act.move(60, false);
+			robot.act.move(60, true);
+			while (robot.act.chassis.isMoving()) robot.eviteObstacle();
 		}
 		
 	}
@@ -154,15 +162,19 @@ public class Robot {
 		robot.act.rotate((360 - robot.act.rotation) % 360, false);
 		robot.act.stop();
 
+		while (robot.sens.dist() > 0.3) {
+			robot.act.rouler3();
+		}
+		Delay.msDelay(500);
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
 		robot.act.stop();
-		robot.act.bougerBras(600);
+		robot.act.bougerBras(500);
 		robot.act.stop();
-		robot.act.pilot.travel(-600, false);
+		robot.act.pilot.travel(-400, false);
 		robot.act.stop();
-		robot.act.bougerBras(-600);
+		robot.act.bougerBras(-500);
 		robot.act.stop();
 		robot.act.rotate(90, false);
 		robot.act.stop();
