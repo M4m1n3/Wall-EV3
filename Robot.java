@@ -68,7 +68,7 @@ public class Robot {
 	public int alignePaletProche3(int angle){
 		ArrayList<Float> mesures = getMesures(angle);
 		int rota = getMin(mesures,angle);
-		act.chassis.setAngularSpeed(1000);
+		act.chassis.setAngularSpeed(400);
 		act.rotate((-(angle-rota)),false);
 		return rota;
 	}
@@ -89,6 +89,7 @@ public class Robot {
 		Delay d = new Delay();
 		boolean paletDetecte = false;
 		boolean obstacle=false;
+		robot.act.chassis.setAngularSpeed(400);
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
