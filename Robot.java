@@ -57,7 +57,7 @@ public class Robot {
 	//fct qui si diff<10cm remplacer mesure par 999  
 	public int getMin(ArrayList<Float> mesures, int angle) {
 		for (int i = 0; i < mesures.size() - 1; i++) {
-			if (Math.abs(mesures.get(i) - mesures.get(i + 1)) < 0.1) {
+			if ((Math.abs(mesures.get(i) - mesures.get(i + 1)) < 0.1)||mesures.get(i)<0.3) {
 				mesures.set(i,mesures.get(i)+999);
 			}
 		}
@@ -103,7 +103,7 @@ public class Robot {
 		robot.act.stop();
 		robot.act.bougerBras(-600);
 		robot.act.stop();
-		robot.act.rotate(100, false);
+		robot.act.rotate(90, false);
 		robot.act.stop();
 		robot.act.move(20, false);
 		robot.act.stop();
