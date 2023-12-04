@@ -104,7 +104,7 @@ public class Robot {
 		robot.act.stop();
 		robot.act.bougerBras(-600);
 		robot.act.stop();
-		robot.act.rotate(90, false);
+		robot.act.rotate(100, false);
 		robot.act.stop();
 		robot.act.move(20, false);
 		robot.act.stop();
@@ -127,7 +127,7 @@ public class Robot {
 
 		while(!robot.boutonPresse()){
 	while (!paletDetecte) {
-		int min = robot.alignePaletProche3(180);
+		int min = robot.alignePaletProche3(360);
 		if (min!=0) {
 			while (robot.sens.dist() > 0.33) {
 				robot.act.rouler2();
@@ -164,10 +164,6 @@ public class Robot {
 		robot.act.rotate((360 - robot.act.rotation) % 360, false);
 		robot.act.stop();
 
-		while (robot.sens.dist() > 0.3) {
-			robot.act.rouler3();
-		}
-		Delay.msDelay(500);
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
