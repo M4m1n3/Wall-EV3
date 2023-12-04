@@ -1,4 +1,3 @@
-package ia;
 import java.util.ArrayList;
 import java.util.Collections;
 import lejos.hardware.Brick;
@@ -18,6 +17,28 @@ public class Robot {
 	Actionneurs act = new Actionneurs();
 	Delay d = new Delay();
 
+    public void startWallDetectionThread() {
+        	        Thread wallDetectionThread = new Thread(new Runnable() {
+        	            @Override
+        	            public void run() {
+        	                while (true) {
+        	                    if (detectionMur()) {
+        	                        eviteObstacle();
+        	                    }
+
+        	                    // Délai entre chaque vérification (ajustez selon vos besoins)
+        	                    try {
+        	                        Thread.sleep(100); // Attendez 100 millisecondes avant la prochaine vérification
+        	                    } catch (InterruptedException e) {
+        	                        e.printStackTrace();
+        	                    }
+        	                }
+        	            }
+        	        });
+
+        	        // Démarrer le thread
+        	        wallDetectionThread.start();
+        	    }
 	public void alignePaletProche() {
 		act.chassis.setAngularSpeed(300);
 		float min = 999;
@@ -90,6 +111,8 @@ public class Robot {
 		boolean paletDetecte = false;
 		boolean obstacle=false;
 		robot.act.chassis.setAngularSpeed(400);
+		while(true){
+			if(Button.ENTER.isDown()) {
 		while (robot.sens.dist() > 0.33) {
 			robot.act.rouler2();
 		}
@@ -125,7 +148,7 @@ public class Robot {
 		robot.act.rotate(90, false);
 		robot.act.stop();
 
-		while(!robot.boutonPresse()){
+
 	while (!paletDetecte) {
 		int min = robot.alignePaletProche3(360);
 		if (min!=0) {
@@ -179,7 +202,7 @@ public class Robot {
 		robot.act.stop();
 
 	}
-		robot.act.stop();
+		}
 
 	}
 }
