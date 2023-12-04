@@ -74,7 +74,7 @@ public class Robot {
 	}
 
 	public boolean detectionMur() {
-		return (sens.dist()<15);
+		return (sens.dist()<0.15);
 	}
 
 	public void eviteObstacle() {
@@ -125,8 +125,6 @@ public class Robot {
 		robot.act.stop();
 
 		while(!robot.boutonPresse()){
-
-				
 	while (!paletDetecte) {
 		int min = robot.alignePaletProche3(180);
 		if (min!=0) {
@@ -177,6 +175,7 @@ public class Robot {
 		robot.act.stop();
 		robot.act.pilot.travel(-400, false);
 		robot.act.stop();
+		paletDetecte=false;
 		robot.act.bougerBras(-500);
 		robot.act.stop();
 		robot.act.rotate(90, false);
