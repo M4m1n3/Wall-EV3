@@ -76,7 +76,7 @@ public class Actionneurs {
 	}
 	public void rotate(int angle, boolean retourImmediat) {
 		// 360 degres = 2110
-		pilot.rotate(angle * 2110 / 360, retourImmediat);
+		pilot.rotate(angle * 2210 / 360, retourImmediat);
 		rotation=(rotation+angle)%360;
 	}
     public void bougerBras(int angle) {
