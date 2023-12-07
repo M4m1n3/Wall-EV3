@@ -11,12 +11,17 @@ import lejos.robotics.chassis.Chassis;
 import lejos.utility.Delay;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
-
+/*
+ * Cette classe représente les différentes méthodes ainsi que le programme principal du robot utilisé pour la compétition.
+ */
 public class Robot {  
 	Sensor sens = new Sensor();
 	Actionneurs act = new Actionneurs();
 	Delay d = new Delay();
 
+	/**
+	 * Démarre le thread de détection de mur.
+	 */
     public void startWallDetectionThread() {
         	        Thread wallDetectionThread = new Thread(new Runnable() {
         	            @Override
@@ -25,45 +30,23 @@ public class Robot {
         	                    if (detectionMur()) {
         	                        eviteObstacle();
         	                    }
-
-        	                    // Délai entre chaque vérification (ajustez selon vos besoins)
         	                    try {
-        	                        Thread.sleep(100); // Attendez 100 millisecondes avant la prochaine vérification
-        	                    } catch (InterruptedException e) {
+        	                        Thread.sleep(100); 
+								} catch (InterruptedException e) {
         	                        e.printStackTrace();
         	                    }
         	                }
         	            }
         	        });
-
-        	        // Démarrer le thread
         	        wallDetectionThread.start();
         	    }
-	public void alignePaletProche() {
-		act.chassis.setAngularSpeed(300);
-		float min = 999;
-		float dN = sens.dist();
-		float dNmoins1;
-		ArrayList<Float> mesures = new ArrayList<Float>();
-		int indexMin=0;
-		act.rotate(360,true);
-		while(act.chassis.isMoving()) {
-			dNmoins1=dN;
-			dN=sens.dist();
-			if (dNmoins1-dN>0.1)
-				if(dN < min) {
-					min=dN;
-					//System.out.println(min);
-					indexMin=mesures.size();
-				}
-			mesures.add(dN);
-		}
-		act.chassis.setAngularSpeed(1000);
-		int rota = (int) (((float) indexMin/(mesures.size()-1))*360);
-		//System.out.println(rota);
-		act.rotate(rota, false);
-		d.msDelay(10000);
-	}
+
+	/**
+	 * Récupère les mesures à partir d'un angle donné.
+	 * 
+	 * @param angle l'angle de rotation du robot
+	 * @return une liste des mesures obtenues à chaque étape de rotation
+	 */
 	public ArrayList<Float> getMesures(int angle) {
 		act.chassis.setAngularSpeed(300);
 		ArrayList<Float> mesures = new ArrayList<Float>();
@@ -74,8 +57,15 @@ public class Robot {
 			dN = sens.dist();
 		}
 		return mesures;
-	}
-	//fct qui si diff<10cm remplacer mesure par 999  
+	} 
+
+	/**
+	 * Récupère l'angle de rotation qui correspond à la distance minimale. Retourne 0 si la distance minimale est supérieure à 1.25. Remplace toutes les valeurs inatteignables par 999.
+	 * 
+	 * @param mesures la liste des mesures obtenues à chaque étape de rotation
+	 * @param angle l'angle de rotation du robot
+	 * @return l'angle de rotation qui correspond à la distance minimale
+	 */
 	public int getMin(ArrayList<Float> mesures, int angle) {
 		for (int i = 0; i < mesures.size() - 1; i++) {
 			if ((Math.abs(mesures.get(i) - mesures.get(i + 1)) < 0.1)||mesures.get(i)<0.3) {
@@ -86,7 +76,13 @@ public class Robot {
 		return (int)(((float)(mesures.indexOf(Collections.min(mesures)))/mesures.size())*angle);
 	}
 
-	public int alignePaletProche3(int angle){
+	/**
+	 * Aligne le robot avec le palet le plus proche en utilisant un angle spécifié.
+	 * 
+	 * @param angle L'angle spécifié pour effectuer la mesure.
+	 * @return L'angle de rotation nécessaire pour aligner le robot avec le palet le plus proche.
+	 */
+	public int alignePaletProche(int angle){
 		ArrayList<Float> mesures = getMesures(angle);
 		int rota = getMin(mesures,angle);
 		act.chassis.setAngularSpeed(400);
@@ -94,17 +90,35 @@ public class Robot {
 		return rota;
 	}
 
+	/**
+	 * Vérifie s'il y a un mur détecté à proximité.
+	 * 
+	 * @return true si un mur est détecté à proximité, sinon false.
+	 */
 	public boolean detectionMur() {
 		return (sens.dist()<0.15);
 	}
 
+	/**
+	 * Fait tourner le robot de 90 degrés si un obstacle est détecté.
+	 */
 	public void eviteObstacle() {
 		if(detectionMur())act.rotate(90, false);
 	}
+
+	/**
+	 * Vérifie si le bouton ENTER est pressé.
+	 * @return true si le bouton ENTER est pressé, sinon false.
+	 */
 	public boolean boutonPresse() {
 		return Button.ENTER.isDown();
 	}
 
+	/**
+	 * Programme principal du robot.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Robot robot = new Robot();
 		Delay d = new Delay();
@@ -133,7 +147,6 @@ public class Robot {
 		robot.act.stop();
 		robot.act.rotate(-90, false);
 
-		//aller au but
 		while (robot.sens.dist() > 0.25) {
 			robot.act.rouler3();
 		}
@@ -150,7 +163,7 @@ public class Robot {
 
 
 	while (!paletDetecte) {
-		int min = robot.alignePaletProche3(360);
+		int min = robot.alignePaletProche(360);
 		if (min!=0) {
 			while (robot.sens.dist() > 0.33) {
 				robot.act.rouler2();
