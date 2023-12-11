@@ -13,6 +13,7 @@ import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 /*
  * Cette classe représente les différentes méthodes ainsi que le programme principal du robot utilisé pour la compétition.
+ @author CHAYNANE Mohamed-Amine, IMAKHLOUFEN Celia Razika, LERICHE Salomé
  */
 public class Robot {  
 	Sensor sens = new Sensor();
